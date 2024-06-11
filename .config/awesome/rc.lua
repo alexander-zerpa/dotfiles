@@ -113,6 +113,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+menubar.show_categories = false
 -- }}}
 
 -- Keyboard map indicator and switcher
@@ -120,7 +121,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock(" %A, %B %d, %Y %H:%M:%S ", 1)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -152,8 +153,9 @@ local tasklist_buttons = gears.table.join(
                                                   )
                                               end
                                           end),
-                     awful.button({ }, 3, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
+                     awful.button({ }, 3, function(c)
+                                              -- awful.menu.client_list({ theme = { width = 250 } })
+					      c:kill()
                                           end),
                      awful.button({ }, 4, function ()
                                               awful.client.focus.byidx(1)
@@ -218,18 +220,20 @@ awful.screen.connect_for_each_screen(function(s)
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
+	expand = "none",
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
+            s.mytasklist, 
         },
-        s.mytasklist, -- Middle widget
+	-- Middle widget
+        mytextclock,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
-            mytextclock,
             s.mylayoutbox,
         },
     }
@@ -353,7 +357,7 @@ clientkeys = gears.table.join(
             c:raise()
         end,
         {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+    awful.key({ modkey,           }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
@@ -582,6 +586,9 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- {{{ Custom
 beautiful.useless_gap = 10
+
+beautiful.tasklist_disable_task_name = true
+beautiful.tasklist_align = "center"
 
 -- Show titlebar on floating window
 local function hide_titlebar(c)
