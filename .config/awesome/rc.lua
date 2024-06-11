@@ -506,7 +506,7 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "dialog" }
+    { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = true }
     },
 
@@ -584,23 +584,26 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 beautiful.useless_gap = 10
 
 -- Show titlebar on floating window
-client.connect_signal("property::floating", function(c)
-    if c.floating then
+local function hide_titlebar(c)
+    local float = c.first_tag and c.first_tag.layout.name == "floating"
+    if (c.floating or float) and not (c.requests_no_titlebar or c.fullscreen) then
         awful.titlebar.show(c)
     else
 	awful.titlebar.hide(c)
     end
-end)
+end
 
--- Show titlebar when on floating layout (incomplete)
--- awful.tag.attached_connect_signal(s, "property::layout", function(t)
---     local float = t.layout.name == "floating"
---     for _,c in pairs(t:clients()) do
---         if float or c.floating then
---             awful.titlebar.show(c)
---         else
---             awful.titlebar.hide(c)
---         end
---     end
--- end)
+-- Show titlebar when creating
+client.connect_signal("manage", hide_titlebar)
+
+-- Show titlebar when making window floating
+client.connect_signal("property::floating", hide_titlebar)
+
+-- Show titlebar when on floating layout
+awful.tag.attached_connect_signal(s, "property::layout", function(t)
+    local float = t.layout.name == "floating"
+    for _,c in pairs(t:clients()) do
+        hide_titlebar(c)
+    end
+end)
 -- }}}
