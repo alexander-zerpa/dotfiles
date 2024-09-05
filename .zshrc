@@ -46,6 +46,10 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # Completion colors
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
+# Activate competion system
+autoload -Uz compinit
+compinit
+
 # Fzf shell integration
 # source <(fzf --zsh)
 
@@ -79,7 +83,7 @@ if command -v bat > /dev/null 2>&1; then
     export MANROFFOPT="-c"
 fi
 
-# replace cat with bat and used as manpager
+# replace ls and tree with lsd unless not found
 if command -v lsd > /dev/null 2>&1; then
     alias ls=$(which lsd)
     command -v tree > /dev/null 2>&1 || alias tree="$(which lsd) --tree"

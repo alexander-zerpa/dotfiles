@@ -18,7 +18,16 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-local has_fd, freedesktop = pcall(require, "freedesktop")
+-- Load Debian menu entries
+local has_fdo, freedesktop = pcall(require, "freedesktop")
+
+-- Load awesome-wm-widgets
+local volume_widget = require("awesome-wm-widgets.pactl-widget.volume")
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+local apt_widget = require("awesome-wm-widgets.apt-widget.apt-widget")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -47,7 +56,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/themes/xresources/theme.lua")
+beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = os.getenv("TERMINAL") or "xterm"
@@ -92,28 +101,29 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end },
 }
 
-if has_fd then
+local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
+local menu_terminal = { "open terminal", terminal }
+
+if has_fdo then
     mymainmenu = freedesktop.menu.build({
-        before = {
-        },
-        after = { 
-            { "Awesome", myawesomemenu },
-            { "open terminal", terminal }
-        }
+        before = { menu_awesome },
+        after =  { menu_terminal }
     })
 else
-    mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                        { "open terminal", terminal }
-                                      }
-                            })
+    mymainmenu = awful.menu({
+        items = {
+                  menu_awesome,
+                  menu_terminal,
+                }
+    })
 end
+
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
-menubar.show_categories = false
 -- }}}
 
 -- Keyboard map indicator and switcher
@@ -122,6 +132,14 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock(" %A, %B %d, %Y %H:%M:%S ", 1)
+
+local cw = calendar_widget({
+    start_sunday = true,
+})
+mytextclock:connect_signal("button::press",
+    function(_, _, _, button)
+        if button == 1 then cw.toggle() end
+    end)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -196,6 +214,9 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+
+    s.mylayoutbox = wibox.container.margin(s.mylayoutbox, 3, 3, 3, 3)
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -208,10 +229,28 @@ awful.screen.connect_for_each_screen(function(s)
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
-	-- For aligment without stretch
-	-- layout = {
-	--     layout = wibox.layout.fixed.horizontal
-	-- },
+	layout   = {
+            layout  = wibox.layout.fixed.horizontal
+        },
+	widget_template = {
+            {
+                {
+                    {
+                        id     = 'icon_role',
+                        widget = wibox.widget.imagebox,
+                    },
+                    margins = 2,
+                    widget  = wibox.container.margin,
+                },
+                {
+                    id     = 'text_role',
+                    widget = wibox.widget.textbox,
+                },
+                layout = wibox.layout.fixed.horizontal,
+            },
+            id     = 'background_role',
+            widget = wibox.container.background,
+        },
     }
 
     -- Create the wibox
@@ -226,15 +265,32 @@ awful.screen.connect_for_each_screen(function(s)
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
-            s.mytasklist, 
+            s.mytasklist,
         },
-	-- Middle widget
-        mytextclock,
+	{ -- Middle widget
+            layout = wibox.layout.fixed.horizontal,
+            apt_widget(),
+            mytextclock,
+        },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
             wibox.widget.systray(),
+            mykeyboardlayout,
+	    brightness_widget{
+                type = "icon_and_text",
+		propgram = "brightnessctl",
+		timeout = 1,
+            },
+	    volume_widget{
+                widget_type = "icon_and_text",
+		tooltip = true,
+            },
+	    battery_widget{
+                show_current_level = true,
+		display_notification = true,
+            },
             s.mylayoutbox,
+	    logout_menu_widget(),
         },
     }
 end)
@@ -279,9 +335,9 @@ globalkeys = gears.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey,           }, ".", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey,           }, ",", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
@@ -302,9 +358,9 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
+    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.01)          end,
               {description = "increase master width factor", group = "layout"}),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
+    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.01)          end,
               {description = "decrease master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
               {description = "increase the number of master clients", group = "layout"}),
@@ -585,7 +641,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 -- {{{ Custom
-beautiful.useless_gap = 10
+beautiful.useless_gap = 5
 
 beautiful.tasklist_disable_task_name = true
 beautiful.tasklist_align = "center"
