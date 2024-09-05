@@ -24,7 +24,6 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 -- Load awesome-wm-widgets
 local volume_widget = require("awesome-wm-widgets.pactl-widget.volume")
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
-local apt_widget = require("awesome-wm-widgets.apt-widget.apt-widget")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
@@ -269,7 +268,6 @@ awful.screen.connect_for_each_screen(function(s)
         },
 	{ -- Middle widget
             layout = wibox.layout.fixed.horizontal,
-            apt_widget(),
             mytextclock,
         },
         { -- Right widgets

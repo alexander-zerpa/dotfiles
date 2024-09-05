@@ -1,5 +1,2 @@
-live_ocnfig_reload = true
-
 [font]
 normal.family = "JetBrainsMono Nerd Font"
-style = "Medium"
