@@ -668,4 +668,16 @@ awful.tag.attached_connect_signal(s, "property::layout", function(t)
         hide_titlebar(c)
     end
 end)
+
+-- Sysray follows focus screen
+gears.timer {
+    timeout = 0.1,
+    call_now = true,
+    autostart = true,
+    callback = function()
+        wibox.widget.systray().set_screen(awful.screen.focused())
+    end
+}
+-- client.connect_signal("focus", update_systray)
+-- client.connect_signal("unfocus", update_systray)
 -- }}}
