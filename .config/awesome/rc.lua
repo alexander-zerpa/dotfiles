@@ -258,7 +258,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
-	expand = "none",
+        expand = "none",
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
@@ -266,7 +266,7 @@ awful.screen.connect_for_each_screen(function(s)
             s.mypromptbox,
             s.mytasklist,
         },
-	{ -- Middle widget
+        { -- Middle widget
             layout = wibox.layout.fixed.horizontal,
             mytextclock,
         },
@@ -274,21 +274,22 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             mykeyboardlayout,
-	    brightness_widget{
+            brightness_widget{
                 type = "icon_and_text",
-		propgram = "brightnessctl",
-		timeout = 1,
+                propgram = "brightnessctl",
+                timeout = 1,
             },
-	    volume_widget{
+            volume_widget{
                 widget_type = "icon_and_text",
-		tooltip = true,
+                tooltip = true,
             },
-	    battery_widget{
+            battery_widget{
                 show_current_level = true,
-		display_notification = true,
+                display_notification = true,
+                path_to_icons = "/run/current-system/sw/share/icons/Arc/status/symbolic/",
             },
             s.mylayoutbox,
-	    logout_menu_widget(),
+            logout_menu_widget(),
         },
     }
 end)
