@@ -78,9 +78,11 @@ alias free='free -h'
 # ======================== EXTRA  ======================== #
 # replace cat with bat and used as manpager
 if command -v bat > /dev/null 2>&1; then
-    alias cat="$(which bat) -p"
+    alias cat="$(which bat) -pp"
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
     export MANROFFOPT="-c"
+    alias -g -- --help="--help 2>&1 | bat --language=help --style=plain"
+    export LESSOPEN="|bat --paging=never --color=always %s"
 fi
 
 # replace ls and tree with lsd unless not found
