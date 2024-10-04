@@ -1,2 +1,7 @@
 [font]
 normal.family = "JetBrainsMono Nerd Font"
+
+[keyboard]
+bindings = [
+    { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" }
+]
