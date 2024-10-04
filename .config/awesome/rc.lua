@@ -522,7 +522,9 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
+      properties = { 
+                     -- border_width = beautiful.border_width,
+                     border_width = 0,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
@@ -590,45 +592,45 @@ client.connect_signal("manage", function (c)
     end
 end)
 
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = gears.table.join(
-        awful.button({ }, 1, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
-        end),
-        awful.button({ }, 3, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
-
-    awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
-end)
+-- -- Add a titlebar if titlebars_enabled is set to true in the rules.
+-- client.connect_signal("request::titlebars", function(c)
+--     -- buttons for the titlebar
+--     local buttons = gears.table.join(
+--         awful.button({ }, 1, function()
+--             c:emit_signal("request::activate", "titlebar", {raise = true})
+--             awful.mouse.client.move(c)
+--         end),
+--         awful.button({ }, 3, function()
+--             c:emit_signal("request::activate", "titlebar", {raise = true})
+--             awful.mouse.client.resize(c)
+--         end)
+--     )
+--
+--     awful.titlebar(c) : setup {
+--         { -- Left
+--             awful.titlebar.widget.iconwidget(c),
+--             buttons = buttons,
+--             layout  = wibox.layout.fixed.horizontal
+--         },
+--         { -- Middle
+--             { -- Title
+--                 align  = "center",
+--                 widget = awful.titlebar.widget.titlewidget(c)
+--             },
+--             buttons = buttons,
+--             layout  = wibox.layout.flex.horizontal
+--         },
+--         { -- Right
+--             awful.titlebar.widget.floatingbutton (c),
+--             awful.titlebar.widget.maximizedbutton(c),
+--             awful.titlebar.widget.stickybutton   (c),
+--             awful.titlebar.widget.ontopbutton    (c),
+--             awful.titlebar.widget.closebutton    (c),
+--             layout = wibox.layout.fixed.horizontal()
+--         },
+--         layout = wibox.layout.align.horizontal
+--     }
+-- end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
@@ -645,29 +647,29 @@ beautiful.useless_gap = 5
 beautiful.tasklist_disable_task_name = true
 beautiful.tasklist_align = "center"
 
--- Show titlebar on floating window
-local function hide_titlebar(c)
-    local float = c.first_tag and c.first_tag.layout.name == "floating"
-    if (c.floating or float) and not (c.requests_no_titlebar or c.fullscreen) then
-        awful.titlebar.show(c)
-    else
-	awful.titlebar.hide(c)
-    end
-end
-
--- Show titlebar when creating
-client.connect_signal("manage", hide_titlebar)
-
--- Show titlebar when making window floating
-client.connect_signal("property::floating", hide_titlebar)
-
--- Show titlebar when on floating layout
-awful.tag.attached_connect_signal(s, "property::layout", function(t)
-    local float = t.layout.name == "floating"
-    for _,c in pairs(t:clients()) do
-        hide_titlebar(c)
-    end
-end)
+-- -- Show titlebar on floating window
+-- local function hide_titlebar(c)
+--     local float = c.first_tag and c.first_tag.layout.name == "floating"
+--     if (c.floating or float) and not (c.requests_no_titlebar or c.fullscreen or c.maximized) then
+--         awful.titlebar.show(c)
+--     else
+-- 	awful.titlebar.hide(c)
+--     end
+-- end
+--
+-- -- Show titlebar when creating
+-- client.connect_signal("manage", hide_titlebar)
+--
+-- -- Show titlebar when making window floating
+-- client.connect_signal("property::floating", hide_titlebar)
+--
+-- -- Show titlebar when on floating layout
+-- awful.tag.attached_connect_signal(s, "property::layout", function(t)
+--     local float = t.layout.name == "floating"
+--     for _,c in pairs(t:clients()) do
+--         hide_titlebar(c)
+--     end
+-- end)
 
 -- Sysray follows focus screen
 gears.timer {
@@ -680,4 +682,24 @@ gears.timer {
 }
 -- client.connect_signal("focus", update_systray)
 -- client.connect_signal("unfocus", update_systray)
+
+-- Smart Borders
+require("smart_borders"){ 
+    -- show_button_tooltips = true, 
+    border_width = (beautiful.border_width + 1) * 3,
+    -- rounded_corner = 20,
+    color_normal = beautiful.border_normal,
+    color_focus = beautiful.border_focus,
+    -- stealth = true,
+    -- snapping = true, -- Requires awesomewm-git
+    positions = { "top" },
+}
+
+-- -- Rounded Corners
+-- client.connect_signal("manage", function(c)
+--     c.shape = function(cr, w, h)
+--         gears.shape.rounded_rect(cr, w, h, 15)
+--     end
+-- end)
+
 -- }}}
