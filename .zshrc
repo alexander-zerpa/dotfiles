@@ -53,6 +53,10 @@ compinit
 # Fzf shell integration
 # source <(fzf --zsh)
 
+# ======================== ENVARS ======================== #
+# direnv faint log text
+export DIRENV_LOG_FORMAT=$'\033[2mdirenv: %s\033[0m'
+
 # ======================= KEYBINDS ======================= #
 # Vi mode
 bindkey -v
