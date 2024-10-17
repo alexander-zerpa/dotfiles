@@ -4,6 +4,7 @@ return {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-calc",
         "hrsh7th/cmp-emoji",
         {
             "L3MON4D3/LuaSnip",
@@ -36,7 +37,7 @@ return {
                 ['<C-e>'] = cmp.mapping.abort(),
                 -- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 ['<CR>'] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
+                    if cmp.visible() and cmp.get_active_entry() then
                         if luasnip.expandable() then
                             luasnip.expand()
                         else
@@ -51,8 +52,8 @@ return {
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif luasnip.locally_jumpable(1) then
-                        luasnip.jump(1)
+                    -- elseif luasnip.locally_jumpable(1) then
+                    --     luasnip.jump(1)
                     else
                         fallback()
                     end
@@ -60,19 +61,31 @@ return {
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
-                    elseif luasnip.locally_jumpable(-1) then
-                        luasnip.jump(-1)
+                    -- elseif luasnip.locally_jumpable(-1) then
+                    --     luasnip.jump(-1)
                     else
                         fallback()
                     end
                 end, { "i", "s" }),
+                ["<C-Tab>"] = cmp.mapping(function(fallback)
+                    if luasnip.locally_jumpable(1) then
+                        luasnip.jump(1)
+                    end
+                end, { "i", "s" }),
+                ["<C-S-Tab>"] = cmp.mapping(function(fallback)
+                    if luasnip.locally_jumpable(-1) then
+                        luasnip.jump(-1)
+                    end
+                end, { "i", "s" }),
             }),
             sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
                 { name = 'luasnip' }, -- For luasnip users.
+                { name = 'nvim_lsp' },
             }, {
-                { name = 'buffer' },
+                { name = 'calc' },
                 { name = 'path' },
+                { name = 'buffer' },
+            }, {
                 { name = 'emoji' },
             }),
             -- experimental = {
@@ -98,8 +111,14 @@ return {
                     kind.kind = " " .. (strings[1] or "") .. " "
                     kind.menu = "    (" .. (strings[2] or "") .. ")"
 
+                    if entry.source.name == "calc" then
+                        vim_item.kind = " 󰃬 "
+                        kind.menu = "    (Calc)"
+                    end
+
                     if entry.source.name == "emoji" then
                         vim_item.kind = " 󰞅 "
+                        kind.menu = "    (Emoji)"
                     end
 
                     return kind
@@ -119,8 +138,8 @@ return {
             sources = cmp.config.sources({
                 { name = 'path' }
             }, {
-                    { name = 'cmdline' }
-                }),
+                { name = 'cmdline' }
+            }),
             matching = { disallow_symbol_nonprefix_matching = false }
         })
         cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
