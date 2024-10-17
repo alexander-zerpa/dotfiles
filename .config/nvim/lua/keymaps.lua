@@ -46,5 +46,9 @@ keymap.set('v', '>', '>gv', { desc = "increase indentation" })
 -- Moving text
 keymap.set('n', '<A-j>', "<cmd>move .+1<CR>",   { desc = "move line down" })
 keymap.set('n', '<A-k>', "<cmd>move .-2<CR>",   { desc = "move line up" })
-keymap.set('v', '<A-j>', ":move '>+1<CR>gv",   { desc = "move line down" })
-keymap.set('v', '<A-k>', ":move '<-2<CR>gv",   { desc = "move line up" })
+keymap.set('v', '<A-j>', ":move '>+1<CR>gv",    { desc = "move line down" })
+keymap.set('v', '<A-k>', ":move '<-2<CR>gv",    { desc = "move line up" })
+
+-- <Tab> to buffer cycling
+keymap.set('n', '<Tab>',   "<cmd>bnext<CR>",     { desc = "cycle buffer" })
+keymap.set('n', '<S-Tab>', "<cmd>bprevious<CR>", { desc = "cycle buffer" })
