@@ -15,6 +15,25 @@ return {
             cond = lazy_status.has_updates,
         })
 
+        local function diff_source()
+            local gitsigns = vim.b.gitsigns_status_dict
+            if gitsigns then
+                return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed
+                }
+            end
+        end
+
+        for key, value in pairs(opts.sections.lualine_b) do
+            if value == 'diff' then
+                opts.sections.lualine_b[key] = { 'diff', source = diff_source }
+            end
+        end
+
+        opts.extensions = { "nvim-tree" }
+
         lualine.setup(opts)
     end,
 }
