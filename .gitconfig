@@ -1,0 +1,14 @@
+[user]
+	email = alexzerpawanner+tech@gmail.com
+	name = Alexander Zerpa
+	signingkey = /home/alex/.ssh/id_ed25519.pub
+[core]
+	pager = less -+X
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /home/alex/.ssh/allowed_signers
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
