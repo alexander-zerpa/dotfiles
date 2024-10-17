@@ -296,11 +296,11 @@ end)
 -- }}}
 
 -- {{{ Mouse bindings
-root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
-))
+-- root.buttons(gears.table.join(
+--     awful.button({ }, 3, function () mymainmenu:toggle() end),
+--     awful.button({ }, 4, awful.tag.viewnext),
+--     awful.button({ }, 5, awful.tag.viewprev)
+-- ))
 -- }}}
 
 -- {{{ Key bindings
@@ -690,6 +690,7 @@ require("smart_borders"){
     -- rounded_corner = 20,
     color_normal = beautiful.border_normal,
     color_focus = beautiful.border_focus,
+    -- button_size = (beautiful.border_width + 1) * 15,
     -- stealth = true,
     -- snapping = true, -- Requires awesomewm-git
     positions = { "top" },
