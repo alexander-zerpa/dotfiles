@@ -10,7 +10,8 @@ return {
             require("nvim-ts-autotag").setup()
 
             configs.setup({
-                auto_install = true,
+                ensure_installed = "all",
+                auto_install = false,
                 highlight = { 
                     enable = true ,
                     additional_vim_regex_highlighting = true, -- for spellcheck
