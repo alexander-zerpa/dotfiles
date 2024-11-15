@@ -172,7 +172,8 @@ local tasklist_buttons = gears.table.join(
                                           end),
                      awful.button({ }, 3, function(c)
                                               -- awful.menu.client_list({ theme = { width = 250 } })
-					      c:kill()
+                                              -- c:kill()
+                                              c:emit_signal("smart_borders::right_click")
                                           end),
                      awful.button({ }, 4, function ()
                                               awful.client.focus.byidx(1)
