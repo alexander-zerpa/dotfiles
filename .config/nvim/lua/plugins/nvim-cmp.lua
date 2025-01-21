@@ -13,6 +13,9 @@ return {
             dependencies = {
                 "rafamadriz/friendly-snippets",
             },
+            keys = {
+                { "<BS>", "<C-O>s", mode = { "s" } },
+            },
         },
         "saadparwaiz1/cmp_luasnip",
         "onsails/lspkind.nvim",
