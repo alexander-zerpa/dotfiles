@@ -28,6 +28,7 @@ return {
         local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
         cmp.setup({
+            preselect = cmp.PreselectMode.None,
             snippet = {
                 expand = function(args)
                     luasnip.lsp_expand(args.body)
@@ -40,7 +41,7 @@ return {
                 ['<C-e>'] = cmp.mapping.abort(),
                 -- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 ['<CR>'] = cmp.mapping(function(fallback)
-                    if cmp.visible() and cmp.get_active_entry() then
+                    if cmp.visible() then
                         if luasnip.expandable() then
                             luasnip.expand()
                         else
