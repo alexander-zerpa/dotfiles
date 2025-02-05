@@ -52,3 +52,11 @@ keymap.set('v', '<A-k>', ":move '<-2<CR>gv",    { desc = "move line up" })
 -- <Tab> to buffer cycling
 keymap.set('n', '<Tab>',   "<cmd>bnext<CR>",     { desc = "cycle buffer" })
 keymap.set('n', '<S-Tab>', "<cmd>bprevious<CR>", { desc = "cycle buffer" })
+
+-- Terminal Keybinds
+keymap.set('t', '<C-ESC>', "<C-\\><C-n>",       { desc = "exit terminal mode" })
+keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h',   { desc = "move focus left" })
+keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j',   { desc = "move focus down" })
+keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k',   { desc = "move focus up" })
+keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l',   { desc = "move focus right" })
+keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>',    { desc = "window movement options" })
