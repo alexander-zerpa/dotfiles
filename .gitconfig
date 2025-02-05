@@ -12,3 +12,6 @@
 	gpgsign = true
 [tag]
 	gpgsign = true
+
+[includeIf "gitdir:~/zaleos/"]
+    path = zaleos/.gitconfig-zaleos
