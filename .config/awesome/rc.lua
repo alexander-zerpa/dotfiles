@@ -28,6 +28,9 @@ local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 
+-- Load awesomewm-micky
+require("awesomewm-micky")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)

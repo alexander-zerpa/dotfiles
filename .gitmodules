@@ -7,3 +7,6 @@
 [submodule ".config/awesome/smart_borders"]
 	path = .config/awesome/smart_borders
 	url = https://github.com/intrntbrn/smart_borders
+[submodule ".config/awesome/awesomewm-micky"]
+	path = .config/awesome/awesomewm-micky
+	url = https://github.com/basaran/awesomewm-micky
