@@ -85,6 +85,7 @@ return {
             sources = cmp.config.sources({
                 { name = 'luasnip' }, -- For luasnip users.
                 { name = 'nvim_lsp' },
+                { name = 'copilot' },
             }, {
                 { name = 'calc' },
                 { name = 'path' },
@@ -114,6 +115,11 @@ return {
                     local strings = vim.split(kind.kind, "%s", { trimempty = true })
                     kind.kind = " " .. (strings[1] or "") .. " "
                     kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+                    if entry.source.name == "copilot" then
+                        vim_item.kind = "  "
+                        kind.menu = "    (Copilot)"
+                    end
 
                     if entry.source.name == "calc" then
                         vim_item.kind = " 󰃬 "
