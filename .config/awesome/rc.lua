@@ -62,6 +62,10 @@ terminal = os.getenv("TERMINAL") or "xterm"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
+local function lock_screen()
+    awful.spawn.with_shell("loginctl lock-session")
+end
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -290,7 +294,9 @@ awful.screen.connect_for_each_screen(function(s)
                 path_to_icons = "/run/current-system/sw/share/icons/Arc/status/symbolic/",
             },
             s.mylayoutbox,
-            logout_menu_widget(),
+            logout_menu_widget({
+                onlock = lock_screen,
+            }),
         },
     }
 end)
@@ -357,6 +363,8 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
+    awful.key({ modkey, "Control"   }, "l", lock_screen,
+              {description = "lock screen", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.01)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -523,7 +531,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { 
+      properties = {
                      -- border_width = beautiful.border_width,
                      border_width = 0,
                      border_color = beautiful.border_normal,
@@ -685,7 +693,7 @@ gears.timer {
 -- client.connect_signal("unfocus", update_systray)
 
 -- Smart Borders
-require("smart_borders"){ 
+require("smart_borders"){
     -- show_button_tooltips = true, 
     border_width = (beautiful.border_width + 1) * 3,
     -- rounded_corner = 20,
