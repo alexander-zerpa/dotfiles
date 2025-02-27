@@ -17,13 +17,18 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 
 # ================== zsh-vi-mode config ================== #
+# Do the initialization when the script is sourced (i.e. Initialize instantly)
+ZVM_INIT_MODE=sourcing
+
 # Always starting with insert mode
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
-# History search rebinding zsh-vi-mode defaults after load
 zvm_after_init_commands+=(
+    # History search rebinding zsh-vi-mode defaults after load
     "zvm_bindkey viins '^n' history-search-backward"
     "zvm_bindkey viins '^p' history-search-forward"
+    # Fzf shell integration
+    "command -v fzf > /dev/null 2>&1 && source <(fzf --zsh)"
 )
 
 # ======================= HISTORY  ======================= #
