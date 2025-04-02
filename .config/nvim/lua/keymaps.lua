@@ -23,15 +23,27 @@ keymap.set('n', '<A-p>', "<cmd>call append(line('.')-1, '')<CR>", { desc = "inse
 
 -- Clipboard
 -- Copy
-keymap.set('n', 'cp', '"+y', { desc = "clipboard copy" })
-keymap.set('n', 'cP', '"+Y', { desc = "clipboard copy line" })
-keymap.set('v', 'cp', '"+y', { desc = "clipboard copy" })
-keymap.set('v', 'cP', '"+Y', { desc = "clipboard copy line" })
+keymap.set('n', 'cy', '"+y', { desc = "clipboard copy" })
+keymap.set('n', 'cY', '"+Y', { desc = "clipboard copy line" })
+keymap.set('v', 'cy', '"+y', { desc = "clipboard copy" })
+keymap.set('v', 'cY', '"+Y', { desc = "clipboard copy line" })
 -- Paste
-keymap.set('n', 'cv', '"+p', { desc = "clipboard paste" })
-keymap.set('n', 'cV', '"+P', { desc = "clipboard paste previus" })
-keymap.set('v', 'cv', '"+p', { desc = "clipboard paste" })
-keymap.set('v', 'cV', '"+P', { desc = "clipboard paste previus" })
+keymap.set('n', 'cp', '"+p', { desc = "clipboard paste" })
+keymap.set('n', 'cP', '"+P', { desc = "clipboard paste previus" })
+keymap.set('v', 'cp', '"+p', { desc = "clipboard paste" })
+keymap.set('v', 'cP', '"+P', { desc = "clipboard paste previus" })
+
+-- Midle click clipboard
+-- Copy
+keymap.set('n', 'Cy', '"*y', { desc = "middle-click copy" })
+keymap.set('n', 'CY', '"*Y', { desc = "middle-click copy line" })
+keymap.set('v', 'Cy', '"*y', { desc = "middle-click copy" })
+keymap.set('v', 'CY', '"*Y', { desc = "middle-click copy line" })
+-- Paste
+keymap.set('n', 'Cp', '"*p', { desc = "middle-click paste" })
+keymap.set('n', 'CP', '"*P', { desc = "middle-click paste previus" })
+keymap.set('v', 'Cp', '"*p', { desc = "middle-click paste" })
+keymap.set('v', 'CP', '"*P', { desc = "middle-click paste previus" })
 
 -- Split Navigation
 keymap.set('n', '<C-h>', '<C-w>h', { desc = "move focus left" })
