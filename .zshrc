@@ -62,6 +62,11 @@ compinit
 # direnv faint log text
 export DIRENV_LOG_FORMAT=$'\033[2mdirenv: %s\033[0m'
 
+if [ -d "$HOME/.local/bin" ]; then
+    path+=("$HOME/.local/bin")
+    export PATH
+fi
+
 # ======================= KEYBINDS ======================= #
 # Vi mode
 bindkey -v
