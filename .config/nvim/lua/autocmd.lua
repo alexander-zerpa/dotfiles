@@ -1,12 +1,14 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
+local delacmd = vim.api.nvim_clear_autocmds
 
 local general = augroup("General Settings", { clear = true })
+local buffer = augroup("Normal Buffer Settings", { clear = true })
 
 -- Highlight when yanking
 autocmd("TextYankPost", {
     callback = function()
-        require("vim.highlight").on_yank({higroup = "Visual", timeout = 200})
+        require("vim.highlight").on_yank({ higroup = "Visual", timeout = 200 })
     end,
     group = general,
 })
@@ -24,13 +26,13 @@ autocmd("InsertEnter", {
     callback = function()
         vim.opt_local.relativenumber = false
     end,
-    group = general,
+    group = buffer,
 })
 autocmd("InsertLeave", {
     callback = function()
         vim.opt_local.relativenumber = true
     end,
-    group = general,
+    group = buffer,
 })
 
 -- No continue comments on new line
@@ -46,6 +48,7 @@ autocmd("TermOpen", {
     callback = function()
         vim.opt_local.number = false
         vim.opt_local.relativenumber = false
+        delacmd({ group = buffer , buffer = 0 })
     end,
     group = general,
 })
