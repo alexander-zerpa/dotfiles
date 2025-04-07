@@ -129,6 +129,8 @@ style = "yellow"
 format = '[$symbol$state( \($name\))]($style) '
 symbol = "  "
 style = "blue"
+heuristic = true
+unknown_msg = 'unknown'
 
 [os]
 format = "[$symbol]($style)"
