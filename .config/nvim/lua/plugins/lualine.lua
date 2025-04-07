@@ -11,15 +11,29 @@ return {
 
         local opts = lualine.get_config()
 
-        table.insert(opts.sections.lualine_x, 1, {
+        local lazy_update = {
             lazy_status.updates,
             cond = lazy_status.has_updates,
-        })
+        }
 
-        table.insert(opts.sections.lualine_x, 1, {
+        -- local function show_macro()
+        --     local recording_register = vim.fn.reg_recording()
+        --     if recording_register == '' then
+        --         return ''
+        --     else
+        --         return 'recording @' .. recording_register
+        --     end
+        -- end
+
+        local lsp_status = {
+            'lsp_status',
+            icon       = '󰌘',
+            ignore_lsp = { 'copilot' },
+        }
+        local copilot = {
             'copilot',
             show_colors = true,
-        })
+        }
 
         local function diff_source()
             local gitsigns = vim.b.gitsigns_status_dict
@@ -32,11 +46,36 @@ return {
             end
         end
 
-        for key, value in pairs(opts.sections.lualine_b) do
-            if value == 'diff' then
-                opts.sections.lualine_b[key] = { 'diff', source = diff_source }
-            end
-        end
+        local diff = {
+            'diff',
+            source = diff_source
+        }
+
+        local location = {
+            'location',
+            padding = { left = 0, right = 1 },
+        }
+
+        local sections = {
+            lualine_a = { 'mode' },
+            lualine_b = { 'selectioncount', 'branch', diff, 'diagnostics' },
+            lualine_c = { 'filename' },
+            lualine_x = { lazy_update },
+            lualine_y = { lsp_status, copilot, 'filetype' },
+            lualine_z = { 'progress', location },
+        }
+
+        local inactive_sections = {
+            lualine_a = {},
+            lualine_b = {},
+            lualine_c = { 'filename' },
+            lualine_x = { 'progress', location },
+            lualine_y = {},
+            lualine_z = {}
+        }
+
+        opts.sections = sections
+        opts.inactive_sections = inactive_sections
 
         opts.extensions = { "nvim-tree" }
 
