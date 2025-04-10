@@ -10,10 +10,14 @@ return {
                 custom_hlgroups = {
                     DiffChanged = {
                         fg = palette.yellow,
-                    }
+                    },
+                    Argument = {
+                        fg = palette.orange,
+                    },
                 }
             })
             vim.api.nvim_set_hl(0, "GitSignsChange", { link = "DiffChanged" })
+            vim.api.nvim_set_hl(0, "Hlargs", { link = "Argument" })
         end,
     },
     -- {
