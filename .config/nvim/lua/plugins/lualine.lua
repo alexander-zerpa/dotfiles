@@ -51,6 +51,17 @@ return {
             source = diff_source
         }
 
+        local branch = {
+            "branch",
+            fmt = function(str)
+                if vim.api.nvim_strwidth(str) > 40 then
+                    return ("%s…"):format(str:sub(1, 39))
+                end
+
+                return str
+            end,
+        }
+
         local location = {
             'location',
             padding = { left = 0, right = 1 },
@@ -58,7 +69,7 @@ return {
 
         local sections = {
             lualine_a = { 'mode' },
-            lualine_b = { 'selectioncount', 'branch', diff, 'diagnostics' },
+            lualine_b = { 'selectioncount', branch, diff, 'diagnostics' },
             lualine_c = { 'filename' },
             lualine_x = { lazy_update },
             lualine_y = { lsp_status, copilot, 'filetype' },
