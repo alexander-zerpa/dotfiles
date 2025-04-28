@@ -14,10 +14,25 @@ return {
                     Argument = {
                         fg = palette.orange,
                     },
+                    Breakpoint = {
+                        fg = palette.red,
+                    },
+                    DapStep = {
+                        fg = palette.green,
+                    },
+                    DapRejected = {
+                        fg = palette.grey,
+                    },
                 }
             })
             vim.api.nvim_set_hl(0, "GitSignsChange", { link = "DiffChanged" })
             vim.api.nvim_set_hl(0, "Hlargs", { link = "Argument" })
+
+            vim.api.nvim_set_hl(0, "DapBreakpoint", { link = "Breakpoint" })
+            vim.api.nvim_set_hl(0, "DapBreakpointCondition", { link = "Breakpoint" })
+            vim.api.nvim_set_hl(0, "DapLogPoint", { link = "Breakpoint" })
+            vim.api.nvim_set_hl(0, "DapStopped", { link = "DapStep" })
+            vim.api.nvim_set_hl(0, "DapBreakpointRejected", { link = "DapRejected" })
         end,
     },
     -- {

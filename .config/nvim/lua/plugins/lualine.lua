@@ -88,7 +88,7 @@ return {
         opts.sections = sections
         opts.inactive_sections = inactive_sections
 
-        opts.extensions = { "nvim-tree" }
+        opts.extensions = { "nvim-tree", "nvim-dap-ui" }
 
         lualine.setup(opts)
     end,
