@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+# More safety, by turning some bugs into errors.
+set -o errexit -o pipefail -o noclobber -o nounset
+
+getopt --test > /dev/null && true
+if [[ $? -ne 4 ]]; then
+    echo 'I’m sorry, `getopt --test` failed in this environment.'
+    exit 1
+fi
+
+help() {
+    echo "Usage: $(basename "$0") [OPTIONS]"
+    echo "Delete branches that are gone on the remote."
+    echo ""
+    echo "Options:"
+    echo "  -D, --delete-unmerged   Delete unmerged branches"
+    echo "  -p, --prefetch          Fetch all remotes"
+    echo "  -h, --help              Show this help message"
+}
+
+LONGOPTS=help,delete-unmerged,prefetch
+OPTIONS=hDp
+
+PARSED=$(getopt --options $OPTIONS --longoptions $LONGOPTS --name "$0" -- "$@")
+
+eval set -- "$PARSED"
+
+DELETE='-d'
+PREFETCH=false
+
+while true; do
+    case "$1" in
+        -D|--delete-unmerged) DELETE='-D'; shift ;;
+        -p|--prefetch) PREFETCH=true; shift ;;
+        -h|--help) help; exit 0 ;;
+        --) shift; break ;;
+        *) echo "Internal error!" ; exit 1 ;;
+    esac
+done
+
+$PREFETCH && git fetch --prune
+
+git branch -vv | grep ': gone]' | grep -v '\*' | awk '{ print $1; }' | xargs -r git branch $DELETE
