@@ -4,5 +4,11 @@ vi_mode_style = { shape = "Block", blinking = "Off" }
 
 [keyboard]
 bindings = [
-    { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" }
+    { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" },
+]
+
+[mouse]
+bindings = [
+    { mouse = "Back", mode = "~Vi|~Search", chars = "\u001b[A" },
+    { mouse = "Forward", mode = "~Vi|~Search", chars = "\u001b[B" },
 ]
