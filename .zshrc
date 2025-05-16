@@ -1,35 +1,29 @@
 # ======================= PLUGINS  ======================= #
 # Plugins dir
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+ZSH_PLUGINS_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/plugins"
 
-# ====================== Installing ====================== #
-# Install zinit
-if [ ! -d "$ZINIT_HOME" ]; then
-    mkdir -p "$(dirname $ZINIT_HOME)"
-    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-
-source "${ZINIT_HOME}/zinit.zsh"
-
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-
-zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+plugins=(
+    "zsh-users/zsh-completions"
+    "zsh-users/zsh-autosuggestions"
+    "jeffreytse/zsh-vi-mode"
+    "zsh-users/zsh-syntax-highlighting"
+)
 
 # ================== zsh-vi-mode config ================== #
 # Do the initialization when the script is sourced (i.e. Initialize instantly)
 ZVM_INIT_MODE=sourcing
 
-# Always starting with insert mode
-ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+# ======================= Loading  ======================= #
 
-zvm_after_init_commands+=(
-    # History search rebinding zsh-vi-mode defaults after load
-    "zvm_bindkey viins '^n' history-search-backward"
-    "zvm_bindkey viins '^p' history-search-forward"
-    # Fzf shell integration
-    "command -v fzf > /dev/null 2>&1 && source <(fzf --zsh)"
-)
+for plugin in $plugins; do
+    pluging_dir="$ZSH_PLUGINS_DIR/${plugin##*'/'}"
+    if [ ! -d $pluging_dir ]; then
+        mkdir -p $pluging_dir
+        git clone https://github.com/$plugin $pluging_dir
+    fi
+    source $pluging_dir/*.plugin.zsh
+done
+
 
 # ======================= HISTORY  ======================= #
 HISTZISE=1000
@@ -56,7 +50,7 @@ autoload -Uz compinit
 compinit
 
 # Fzf shell integration
-# source <(fzf --zsh)
+command -v fzf > /dev/null 2>&1 && source <(fzf --zsh)
 
 # ======================== ENVARS ======================== #
 # direnv faint log text
@@ -106,9 +100,6 @@ if command -v lsd > /dev/null 2>&1; then
 else
     alias ls='ls --color=auto'
 fi
-
-# Enables syntax highlighting (needs to be last)
-zinit light zsh-users/zsh-syntax-highlighting
 
 # Use starship promt
 command -v starship > /dev/null 2>&1 && eval "$(starship init zsh)"
