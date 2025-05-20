@@ -53,12 +53,12 @@ return {
             severity_sort = true,
         })
 
-        -- Create the lsp keymaps only when a 
+        -- Create the lsp keymaps only when a
         -- language server is active
         vim.api.nvim_create_autocmd('LspAttach', {
             desc = 'LSP actions',
             callback = function(event)
-                local opts = {buffer = event.buf}
+                local opts = { buffer = event.buf }
                 -- recommended
                 opts.desc = "show information"
                 vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
@@ -77,7 +77,7 @@ return {
                 opts.desc = "renames all references"
                 vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
                 opts.desc = "format using lsp client"
-                vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+                vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
                 opts.desc = "Select code action"
                 vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
                 -- defaults fix

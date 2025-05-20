@@ -12,7 +12,7 @@ return {
         local nvim_tree_api = require("nvim-tree.api")
 
         -- Make :bd and :q behave as usual when tree is visible
-        vim.api.nvim_create_autocmd({'BufEnter', 'QuitPre'}, {
+        vim.api.nvim_create_autocmd({ 'BufEnter', 'QuitPre' }, {
             nested = false,
             callback = function(e)
                 local tree = nvim_tree_api.tree
@@ -24,7 +24,7 @@ return {
 
                 -- How many focusable windows do we have? (excluding e.g. incline status window)
                 local winCount = 0
-                for _,winId in ipairs(vim.api.nvim_list_wins()) do
+                for _, winId in ipairs(vim.api.nvim_list_wins()) do
                     if vim.api.nvim_win_get_config(winId).focusable then
                         winCount = winCount + 1
                     end
@@ -32,7 +32,7 @@ return {
 
                 -- We want to quit and only one window besides tree is left
                 if e.event == 'QuitPre' and winCount == 2 then
-                    vim.api.nvim_cmd({cmd = 'qall'}, {})
+                    vim.api.nvim_cmd({ cmd = 'qall' }, {})
                 end
 
                 -- :bd was probably issued an only tree window is left
@@ -41,9 +41,9 @@ return {
                     -- Required to avoid "Vim:E444: Cannot close last window"
                     vim.defer_fn(function()
                         -- close nvim-tree: will go to the last buffer used before closing
-                        tree.toggle({find_file = true, focus = true})
+                        tree.toggle({ find_file = true, focus = true })
                         -- re-open nivm-tree
-                        tree.toggle({find_file = true, focus = false})
+                        tree.toggle({ find_file = true, focus = false })
                     end, 10)
                 end
             end
@@ -52,7 +52,7 @@ return {
         nvim_tree_api.events.subscribe(nvim_tree_api.events.Event.TreeOpen, function()
             local tree_winid = nvim_tree_api.tree.winid()
             if tree_winid ~= nil then
-                vim.api.nvim_set_option_value("statusline", " ", {win = tree_winid})
+                vim.api.nvim_set_option_value("statusline", " ", { win = tree_winid })
             end
         end)
 

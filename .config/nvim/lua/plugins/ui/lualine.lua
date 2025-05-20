@@ -5,25 +5,14 @@ return {
         "nvim-tree/nvim-web-devicons",
         "AndreM222/copilot-lualine",
     },
-    config = function()
+    config = function(opts)
         local lualine = require("lualine")
         local lazy_status = require("lazy.status")
-
-        local opts = lualine.get_config()
 
         local lazy_update = {
             lazy_status.updates,
             cond = lazy_status.has_updates,
         }
-
-        -- local function show_macro()
-        --     local recording_register = vim.fn.reg_recording()
-        --     if recording_register == '' then
-        --         return ''
-        --     else
-        --         return 'recording @' .. recording_register
-        --     end
-        -- end
 
         local lsp_status = {
             'lsp_status',
@@ -35,20 +24,18 @@ return {
             show_colors = true,
         }
 
-        local function diff_source()
-            local gitsigns = vim.b.gitsigns_status_dict
-            if gitsigns then
-                return {
-                    added = gitsigns.added,
-                    modified = gitsigns.changed,
-                    removed = gitsigns.removed
-                }
-            end
-        end
-
         local diff = {
             'diff',
-            source = diff_source
+            source = function()
+                local gitsigns = vim.b.gitsigns_status_dict
+                if gitsigns then
+                    return {
+                        added = gitsigns.added,
+                        modified = gitsigns.changed,
+                        removed = gitsigns.removed
+                    }
+                end
+            end
         }
 
         local branch = {
@@ -67,7 +54,7 @@ return {
             padding = { left = 0, right = 1 },
         }
 
-        local sections = {
+        opts.sections = {
             lualine_a = { 'mode' },
             lualine_b = { 'selectioncount', branch, diff, 'diagnostics' },
             lualine_c = { 'filename' },
@@ -75,8 +62,7 @@ return {
             lualine_y = { lsp_status, copilot, 'filetype' },
             lualine_z = { 'progress', location },
         }
-
-        local inactive_sections = {
+        opts.inactive_sections = {
             lualine_a = {},
             lualine_b = {},
             lualine_c = { 'filename' },
@@ -85,10 +71,7 @@ return {
             lualine_z = {}
         }
 
-        opts.sections = sections
-        opts.inactive_sections = inactive_sections
-
-        opts.extensions = { "nvim-tree", "nvim-dap-ui" }
+        opts.extensions = { "nvim-tree", "nvim-dap-ui", "neo-tree", "toggleterm", "trouble" }
 
         lualine.setup(opts)
     end,

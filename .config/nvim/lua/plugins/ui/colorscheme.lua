@@ -39,18 +39,12 @@ return {
     --     "polirritmico/monokai-nightasty.nvim",
     --     lazy = false,
     --     priority = 1000,
-    --     config = function()
-    --         require("monokai-nightasty").load({
-    --             color_headers = true,
-    --             markdown_header_marks = true,
-    --         })
+    --     init = function()
+    --         vim.o.background = "dark"
+    --         vim.cmd.colorscheme("monokai-nightasty")
+    --         -- vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", { link = "WinSeparator" })
     --     end,
+    --     opts = {
+    --     },
     -- },
-    {
-        -- "catppuccin/nvim",
-        -- priority = 1000,
-        -- config = function()
-        --     vim.cmd.colorscheme("catppuccin")
-        -- end,
-    },
 }

@@ -9,18 +9,18 @@ return {
                 opts = {}
             },
         },
-        config = function() 
+        config = function()
             local configs = require("nvim-treesitter.configs")
             require("nvim-ts-autotag").setup()
 
             configs.setup({
                 ensure_installed = "all",
                 auto_install = false,
-                highlight = { 
-                    enable = true ,
+                highlight = {
+                    enable = true,
                     additional_vim_regex_highlighting = true, -- for spellcheck
                 },
-                indent = { enable = true },  
+                indent = { enable = true },
             })
 
             vim.wo.foldmethod = 'expr'
@@ -47,8 +47,8 @@ return {
         "nvim-treesitter/nvim-treesitter-context",
         opts = {},
         config = function()
-            vim.api.nvim_set_hl(0, "TreesitterContextBottom", { underline = true , sp = "Grey" })
-            vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", { underline = true , sp = "Grey" })
+            vim.api.nvim_set_hl(0, "TreesitterContextBottom", { underline = true, sp = "Grey" })
+            vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", { underline = true, sp = "Grey" })
         end,
     },
     {
@@ -65,8 +65,8 @@ return {
                         keymaps = {
                             ["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
                             ["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
-                            ["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
-                            ["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
+                            ["l="] = { query = "@assignment.lhs",   desc = "Select left hand side of an assignment" },
+                            ["r="] = { query = "@assignment.rhs",   desc = "Select right hand side of an assignment" },
 
                             ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
                             ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
@@ -116,24 +116,24 @@ return {
                         enable = true,
                         swap_next = {
                             ["<leader>na"] = { query = "@parameter.inner", desc = "Swap parameters/argument with next" },
-                            ["<leader>nd"] = { query = "@function.outer", desc = "Swap function with next" },
+                            ["<leader>nd"] = { query = "@function.outer",  desc = "Swap function with next" },
                         },
                         swap_previous = {
                             ["<leader>pa"] = { query = "@parameter.inner", desc = "Swap parameters/argument with prev" },
-                            ["<leader>pd"] = { query = "@function.outer", desc = "Swap function with prev" },
+                            ["<leader>pd"] = { query = "@function.outer",  desc = "Swap function with prev" },
                         },
                     },
                     move = {
                         enable = true,
                         set_jumps = true, -- whether to set jumps in the jumplist
                         goto_next_start = {
-                            ["]a"] = { query = "@argument.outer", desc = "Next argument start" },
-                            ["]f"] = { query = "@call.outer", desc = "Next function call start" },
-                            ["]d"] = { query = "@function.outer", desc = "Next method/function def start" },
-                            ["]o"] = { query = "@class.outer", desc = "Next class start" },
+                            ["]a"] = { query = "@argument.outer",    desc = "Next argument start" },
+                            ["]f"] = { query = "@call.outer",        desc = "Next function call start" },
+                            ["]d"] = { query = "@function.outer",    desc = "Next method/function def start" },
+                            ["]o"] = { query = "@class.outer",       desc = "Next class start" },
                             ["]i"] = { query = "@conditional.outer", desc = "Next conditional start" },
-                            ["]l"] = { query = "@loop.outer", desc = "Next loop start" },
-                            ["]c"] = { query = "@comment.outer", desc = "Next comment start" },
+                            ["]l"] = { query = "@loop.outer",        desc = "Next loop start" },
+                            ["]c"] = { query = "@comment.outer",     desc = "Next comment start" },
 
                             -- -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
                             -- -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
@@ -141,31 +141,31 @@ return {
                             -- ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
                         },
                         goto_next_end = {
-                            ["]A"] = { query = "@cargument.outer", desc = "Next argument end" },
-                            ["]F"] = { query = "@call.outer", desc = "Next function call end" },
-                            ["]D"] = { query = "@function.outer", desc = "Next method/function def end" },
-                            ["]O"] = { query = "@class.outer", desc = "Next class end" },
+                            ["]A"] = { query = "@cargument.outer",   desc = "Next argument end" },
+                            ["]F"] = { query = "@call.outer",        desc = "Next function call end" },
+                            ["]D"] = { query = "@function.outer",    desc = "Next method/function def end" },
+                            ["]O"] = { query = "@class.outer",       desc = "Next class end" },
                             ["]I"] = { query = "@conditional.outer", desc = "Next conditional end" },
-                            ["]L"] = { query = "@loop.outer", desc = "Next loop end" },
-                            ["]C"] = { query = "@comment.outer", desc = "Next comment end" },
+                            ["]L"] = { query = "@loop.outer",        desc = "Next loop end" },
+                            ["]C"] = { query = "@comment.outer",     desc = "Next comment end" },
                         },
                         goto_previous_start = {
-                            ["[a"] = { query = "@cargument.outer", desc = "Prev argument start" },
-                            ["[f"] = { query = "@call.outer", desc = "Prev function call start" },
-                            ["[d"] = { query = "@function.outer", desc = "Prev method/function def start" },
-                            ["[o"] = { query = "@class.outer", desc = "Prev class start" },
+                            ["[a"] = { query = "@cargument.outer",   desc = "Prev argument start" },
+                            ["[f"] = { query = "@call.outer",        desc = "Prev function call start" },
+                            ["[d"] = { query = "@function.outer",    desc = "Prev method/function def start" },
+                            ["[o"] = { query = "@class.outer",       desc = "Prev class start" },
                             ["[i"] = { query = "@conditional.outer", desc = "Prev conditional start" },
-                            ["[l"] = { query = "@loop.outer", desc = "Prev loop start" },
-                            ["[c"] = { query = "@comment.outer", desc = "Prev comment start" },
+                            ["[l"] = { query = "@loop.outer",        desc = "Prev loop start" },
+                            ["[c"] = { query = "@comment.outer",     desc = "Prev comment start" },
                         },
                         goto_previous_end = {
-                            ["[A"] = { query = "@cargument.outer", desc = "Prev argument end" },
-                            ["[F"] = { query = "@call.outer", desc = "Prev function call end" },
-                            ["[D"] = { query = "@function.outer", desc = "Prev method/function def end" },
-                            ["[O"] = { query = "@class.outer", desc = "Prev class end" },
+                            ["[A"] = { query = "@cargument.outer",   desc = "Prev argument end" },
+                            ["[F"] = { query = "@call.outer",        desc = "Prev function call end" },
+                            ["[D"] = { query = "@function.outer",    desc = "Prev method/function def end" },
+                            ["[O"] = { query = "@class.outer",       desc = "Prev class end" },
                             ["[I"] = { query = "@conditional.outer", desc = "Prev conditional end" },
-                            ["[L"] = { query = "@loop.outer", desc = "Prev loop end" },
-                            ["[C"] = { query = "@comment.outer", desc = "Prev comment end" },
+                            ["[L"] = { query = "@loop.outer",        desc = "Prev loop end" },
+                            ["[C"] = { query = "@comment.outer",     desc = "Prev comment end" },
                         },
                     },
                     lsp_interop = {
