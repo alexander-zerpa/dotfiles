@@ -4,10 +4,6 @@ return {
         build = ":TSUpdate",
         dependencies = {
             "windwp/nvim-ts-autotag",
-            {
-                "m-demare/hlargs.nvim",
-                opts = {}
-            },
         },
         config = function()
             local configs = require("nvim-treesitter.configs")
