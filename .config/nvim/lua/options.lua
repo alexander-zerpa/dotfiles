@@ -27,6 +27,8 @@ local options = {
 
     mouse = 'a',
 
+    textwidth = 80,
+    colorcolumn = '+1'
 }
 
 for k, v in pairs(options) do
