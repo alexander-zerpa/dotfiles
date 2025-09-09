@@ -1,9 +1,7 @@
 return {
     "nvim-lualine/lualine.nvim",
-    even = "VeryLazy",
     dependencies = {
         "nvim-tree/nvim-web-devicons",
-        "AndreM222/copilot-lualine",
     },
     config = function(opts)
         local lualine = require("lualine")
@@ -71,7 +69,7 @@ return {
             lualine_z = {}
         }
 
-        opts.extensions = { "nvim-tree", "nvim-dap-ui", "neo-tree", "toggleterm", "trouble" }
+        opts.extensions = { "quickfix", "nvim-tree", "nvim-dap-ui", "neo-tree", "toggleterm", "trouble" }
 
         lualine.setup(opts)
     end,

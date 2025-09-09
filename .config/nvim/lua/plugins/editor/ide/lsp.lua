@@ -1,29 +1,16 @@
 return {
-    "williamboman/mason.nvim",
+    "mason-org/mason-lspconfig.nvim",
     dependencies = {
-        "williamboman/mason-lspconfig.nvim",
+        {
+            "mason-org/mason.nvim",
+            opts = {
+                ui = { border = 'rounded' },
+                registries = { "github:mason-org/mason-registry" },
+            },
+        },
         "neovim/nvim-lspconfig",
-        "hrsh7th/cmp-nvim-lsp",
     },
-    config = function()
-        local mason_lspconfig = require("mason-lspconfig")
-        local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-        mason_lspconfig.setup()
-
-        local border = "rounded"
-
-        require("mason").setup({
-            ui = {
-                icons = {
-                    package_installed = "✓",
-                    package_pending = "➜",
-                    package_uninstalled = "✗"
-                },
-                border = border,
-            }
-        })
-
+    init = function()
         local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
         for type, icon in pairs(signs) do
             local hl = "DiagnosticSign" .. type
@@ -31,23 +18,12 @@ return {
         end
 
         vim.diagnostic.config({
+            signs = true,
             virtual_text = {
                 severity = vim.diagnostic.severity.ERROR
-                -- -- for 1.0.0
-                -- prefix = function(diagnostic)
-                --     if diagnostic.severity == vim.diagnostic.severity.ERROR then
-                --         return signs['Error']
-                --     elseif diagnostic.severity == vim.diagnostic.severity.WARN then
-                --         return signs['Warn']
-                --     elseif diagnostic.severity == vim.diagnostic.severity.HINT then
-                --         return signs['Hint']
-                --     elseif diagnostic.severity == vim.diagnostic.severity.INFO then
-                --         return signs['Info']
-                --     end
-                -- end,
             },
             underline = {
-                severity = vim.diagnostic.severity.ERROR
+                severity = vim.diagnostic.severity.WARN
             },
             severity_sort = true,
         })
@@ -92,21 +68,12 @@ return {
             end,
         })
 
-        local capabilities = cmp_nvim_lsp.default_capabilities()
-
         local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
         function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
             opts = opts or {}
-            opts.border = opts.border or border
+            opts.border = opts.border or 'rounded'
             return orig_util_open_floating_preview(contents, syntax, opts, ...)
         end
-
-        mason_lspconfig.setup_handlers({
-            function(server_name)
-                require("lspconfig")[server_name].setup({
-                    capabilities = capabilities,
-                })
-            end,
-        })
     end,
+    opts = {},
 }

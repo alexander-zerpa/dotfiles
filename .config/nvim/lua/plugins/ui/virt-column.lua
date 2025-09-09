@@ -1,4 +1,4 @@
 return {
-    "lukas-reineke/virt-column.nvim", 
+    "lukas-reineke/virt-column.nvim",
     opts = {},
 }

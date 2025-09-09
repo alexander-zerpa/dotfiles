@@ -14,6 +14,8 @@ return {
         local dap, dapui = require("dap"), require("dapui")
         local mason_dap = require("mason-nvim-dap")
 
+        require("dap.ext.vscode").load_launchjs()
+
         mason_dap.setup()
         dapui.setup()
 
@@ -47,32 +49,6 @@ return {
         vim.keymap.set('n', '<leader>ds', dap.step_over, { desc = "dap step over" })
         vim.keymap.set('n', '<F11>',      dap.step_out,  { desc = "dap step out" })
         vim.keymap.set('n', '<leader>do', dap.step_out,  { desc = "dap step out" })
-
-        -- netcoredbg
-        local netcoredbg = vim.fn.exepath "netcoredbg"
-        if netcoredbg ~= "" then
-            dap.adapters.coreclr = {
-                type = 'executable',
-                command = netcoredbg,
-                args = { '--interpreter=vscode' }
-            }
-            dap.configurations.cs = {
-                {
-                    type = "coreclr",
-                    name = "launch - netcoredbg",
-                    request = "launch",
-                    program = function()
-                        return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Debug/', 'file')
-                    end,
-                },
-                {
-                    type = "coreclr",
-                    name = "attach - netcoredbg",
-                    request = "attach",
-                    processId = require('dap.utils').pick_process,
-                },
-            }
-        end
 
         vim.fn.sign_define('DapBreakpoint',          { text = '󰯯 ', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
         vim.fn.sign_define('DapBreakpointCondition', { text = '󰯲 ', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' })

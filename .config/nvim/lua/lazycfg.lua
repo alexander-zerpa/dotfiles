@@ -25,10 +25,13 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     spec = {
         -- import your plugins
-        { import = "plugins" },
-        { import = "plugins.core" },
-        { import = "plugins.ide" },
+        -- { import = "plugins" },
+        { import = "plugins.editor" },
+        { import = "plugins.editor.ide" },
+        { import = "plugins.editor.languages" },
+        { import = "plugins.editor.extra" },
         { import = "plugins.ui" },
+        { import = "plugins.ai" },
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
