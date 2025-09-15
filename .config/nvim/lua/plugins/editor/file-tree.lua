@@ -1,12 +1,18 @@
 return {
     "nvim-tree/nvim-tree.lua",
+    event = { "VeryLazy", "BufEnter" },
     keys = {
         { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
         { "<leader>E", "<cmd>NvimTreeFindFile<cr>", desc = "Toggle NvimTree" },
     },
     opts = {
         hijack_cursor = true,
-        select_prompts = true,
+        select_prompts = false,
+
+        disable_netrw = true,
+
+        hijack_netrw = true,
+        update_cwd = true,
 
         view = {
             signcolumn = "auto",
