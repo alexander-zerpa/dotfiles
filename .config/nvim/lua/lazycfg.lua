@@ -29,7 +29,7 @@ require("lazy").setup({
         { import = "plugins.editor" },
         { import = "plugins.editor.ide" },
         { import = "plugins.editor.languages" },
-        { import = "plugins.editor.extra" },
+        { import = "plugins.extra" },
         { import = "plugins.ui" },
         { import = "plugins.ai" },
     },
