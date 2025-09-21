@@ -1,8 +1,8 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "e30b7f2008e52442154b66f7c519bfd2f1e32acb" },
+  "barbar.nvim": { "branch": "master", "commit": "549ee11d97057eae207bafa2c23c315942cca097" },
   "blink-copilot": { "branch": "main", "commit": "41e91a659bd9b8cba9ba2ea68a69b52ba5a9ebd8" },
   "blink.cmp": { "branch": "main", "commit": "bae4bae0eedd1fa55f34b685862e94a222d5c6f8" },
-  "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
   "copilot-lualine": { "branch": "main", "commit": "6bc29ba1fcf8f0f9ba1f0eacec2f178d9be49333" },
   "copilot.lua": { "branch": "master", "commit": "81d289a8ce5d4ee1dea9b1c8ee4ac376b2e27a5f" },
   "foldtext.nvim": { "branch": "main", "commit": "11b65d06b4f693aa0ecbd1456e905eb081984a53" },
