@@ -10,4 +10,13 @@ return {
         end,
         opts = {},
     },
+    {
+        "nvim-tree/nvim-web-devicons",
+        optional = true,
+        dependencies = {
+            "rachartier/tiny-devicons-auto-colors.nvim",
+            event = "VeryLazy",
+            opts = {},
+        }
+    }
 }
