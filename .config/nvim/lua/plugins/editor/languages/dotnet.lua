@@ -1,8 +1,6 @@
 return {
     {
         "seblyng/roslyn.nvim",
-        ---@module 'roslyn.config'
-        ---@type RoslynNvimConfig
         ft = { "cs", "fsharp", "vb" },
         dependencies = {
             {
