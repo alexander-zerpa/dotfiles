@@ -28,7 +28,9 @@ local options = {
     mouse = 'a',
 
     textwidth = 80,
-    colorcolumn = '+1'
+    colorcolumn = '+1',
+
+    winborder = 'rounded',
 }
 
 for k, v in pairs(options) do

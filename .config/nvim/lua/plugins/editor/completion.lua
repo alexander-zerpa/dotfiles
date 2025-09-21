@@ -29,9 +29,7 @@ return {
         },
 
         completion = {
-            menu = { border = 'rounded' },
             documentation = {
-                window = { border = 'rounded' },
                 auto_show = true
             },
             list = {
@@ -40,7 +38,6 @@ return {
                 }
             }
         },
-        signature = { window = { border = 'rounded' } },
 
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
