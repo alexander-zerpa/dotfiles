@@ -3,6 +3,7 @@ return {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         event = { "BufReadPost", "BufNewFile" },
+        lazy = false,
         init = function()
             -- Set up an autocmd to apply folding after the parser is ready
             vim.api.nvim_create_autocmd({ "BufReadPost", "BufEnter" }, {
@@ -17,7 +18,7 @@ return {
             })
         end,
         opts = {
-            ensure_installed = "all",
+            auto_install = true,
             highlight = {
                 enable = true,
             },
@@ -174,7 +175,7 @@ return {
                     require('ts_context_commentstring').setup(opts)
 
                     local comment_plugin = require('lazy.core.config').plugins["Comment.nvim"]
-                    if commnent_plugin then
+                    if comment_plugin then
                         comment_plugin.opts.pre_hook = require('ts_context_commentstring.integrations.comment_nvim')
                             .create_pre_hook()
                     end
@@ -183,10 +184,12 @@ return {
             {
                 'Wansmer/treesj',
                 keys = {
-                    { "<C-S-j>", function() require("treesj").join() end,   desc = "Join code with Treesj" },
-                    { "<C-S-s>", function() require("treesj").split() end,  desc = "Split code with Treesj" },
+                    { "<C-S-j>", function() require("treesj").join() end,  desc = "Join code with Treesj" },
+                    { "<C-S-s>", function() require("treesj").split() end, desc = "Split code with Treesj" },
                 },
-                opts = {},
+                opts = {
+                    use_default_keymaps = false,
+                },
             }
         },
     },
