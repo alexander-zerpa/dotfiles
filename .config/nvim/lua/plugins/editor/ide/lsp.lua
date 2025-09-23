@@ -58,12 +58,6 @@ return {
     },
     {
         "rachartier/tiny-inline-diagnostic.nvim",
-        dependencies = {
-            {
-                "artemave/workspace-diagnostics.nvim",
-                opts = {}
-            },
-        },
         event = "VeryLazy",
         priority = 1000,
         init = function()
