@@ -5,7 +5,9 @@ return {
 	},
 	{
 		"lewis6991/satellite.nvim",
-		opts = {},
+		opts = {
+            excluded_filetypes = { "neo-tree", "NvimTree", "Trouble", "lazy", "mason", "toggleterm", "TelescopePrompt" },
+        },
 	},
 	{
 		"gorbit99/codewindow.nvim",
