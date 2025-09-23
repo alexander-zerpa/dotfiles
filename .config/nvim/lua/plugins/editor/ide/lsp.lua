@@ -96,13 +96,4 @@ return {
             },
         },
     },
-    {
-        "soulis-1256/eagle.nvim",
-        init = function()
-            vim.o.mousemoveevent = true
-        end,
-        opts = {
-            --override the default values found in config.lua
-        }
-    },
 }

@@ -6,7 +6,6 @@
   "codewindow.nvim": { "branch": "master", "commit": "a8e175043ce3baaa89e0a6b5171bcd920aab3dad" },
   "copilot-lualine": { "branch": "main", "commit": "6bc29ba1fcf8f0f9ba1f0eacec2f178d9be49333" },
   "copilot.lua": { "branch": "master", "commit": "af3114aeb915beb14fcbc46849c7b08a5e3e2c1a" },
-  "eagle.nvim": { "branch": "main", "commit": "dd1a28c4d8626fbe85580b0a9ed8f88d77a26da1" },
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
   "gemini.nvim": { "branch": "master", "commit": "424241e9b2fb535d1c9bb87e00961967d1f2e8d5" },
   "gitsigns.nvim": { "branch": "main", "commit": "f780609807eca1f783a36a8a31c30a48fbe150c5" },
