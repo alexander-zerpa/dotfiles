@@ -6,9 +6,9 @@ return {
             {
                 "mason-org/mason.nvim",
                 optional = true,
-                opts_extend = {
+                opts = {
                     registries = {
-                        "github:Crashdummy/mason-registry",
+                        "github:crashdummyy/mason-registry",
                     },
                 },
             }

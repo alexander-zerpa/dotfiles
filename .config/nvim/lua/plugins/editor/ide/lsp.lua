@@ -7,6 +7,7 @@ return {
                 opts = {
                     registries = { "github:mason-org/mason-registry" },
                 },
+                opts_extend = { "registries" },
             },
             {
                 "neovim/nvim-lspconfig",
