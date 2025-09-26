@@ -6,6 +6,9 @@ return {
 		vim.opt.foldlevelstart = 99
 	end,
 	opts = {
+        autoFold = {
+            enabled = false,
+        },
         foldKeymaps = {
             setup = false,
         }
