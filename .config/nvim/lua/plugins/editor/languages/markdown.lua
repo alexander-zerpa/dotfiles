@@ -26,6 +26,10 @@ return {
                 width = 'block',
                 min_width = 80,
             },
+            pipe_table = {
+                preset = 'round',
+                alignment_indicator = '┅',
+            },
         },
     },
     {
