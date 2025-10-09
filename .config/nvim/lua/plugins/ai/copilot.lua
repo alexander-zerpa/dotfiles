@@ -25,6 +25,7 @@ return {
             }
         },
         opts = {
+            disable_limit_reached_message = true,
             suggestion = { enabled = false },
             panel = { enabled = false },
         },
