@@ -22,15 +22,19 @@ autocmd("VimResized", {
 })
 
 -- Change to absolute numbers on insert
-autocmd("InsertEnter", {
+autocmd({ "InsertEnter", "BufLeave", "WinLeave", "FocusLost" }, {
     callback = function()
-        vim.opt_local.relativenumber = false
+        if vim.wo.number then
+            vim.wo.relativenumber = false
+        end
     end,
     group = buffer,
 })
-autocmd("InsertLeave", {
+autocmd({ "InsertLeave", "BufEnter", "WinEnter", "FocusGained" }, {
     callback = function()
-        vim.opt_local.relativenumber = true
+        if vim.wo.number then
+            vim.wo.relativenumber = true
+        end
     end,
     group = buffer,
 })
