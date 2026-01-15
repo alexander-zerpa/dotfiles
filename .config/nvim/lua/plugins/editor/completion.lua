@@ -1,10 +1,37 @@
+local kind_icons = {
+    Text = "󰉿",
+    Method = "󰊕",
+    Function = "󰊕",
+    Constructor = "",
+    Field = "󰜢",
+    Variable = "󰀫",
+    Class = "󰠱",
+    Interface = "",
+    Module = "",
+    Property = "󰜢",
+    Unit = "󰑭",
+    Value = "󰎟",
+    Enum = "",
+    Keyword = "󰌋",
+    Snippet = "",
+    Color = "󰏘",
+    File = "󰈙",
+    Reference = "󰈚",
+    Folder = "󰉋",
+    EnumMember = "",
+    Constant = "󰏿",
+    Struct = "󰙅",
+    Event = "",
+    Operator = "󰆕",
+    TypeParameter = "󰊄",
+}
+
 return {
     'saghen/blink.cmp',
     version = '1.*',
     dependencies = {
         'rafamadriz/friendly-snippets',
         'nvim-tree/nvim-web-devicons',
-        'onsails/lspkind.nvim',
     },
     opts = {
         -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
@@ -46,16 +73,18 @@ return {
                     components = {
                         kind_icon = {
                             text = function(ctx)
-                                local icon = ctx.kind_icon
-                                if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                                local icon = kind_icons[ctx.kind]
+
+                                -- Use devicons for specific file extensions
+                                if ctx.source_name == "Path" then
                                     local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
                                     if dev_icon then
                                         icon = dev_icon
                                     end
-                                else
-                                    icon = require("lspkind").symbolic(ctx.kind, {
-                                        mode = "symbol",
-                                    })
+                                end
+
+                                if not icon then
+                                    icon = ctx.kind_icon or "󰘥"
                                 end
 
                                 return icon .. ctx.icon_gap
