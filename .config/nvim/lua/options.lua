@@ -31,6 +31,8 @@ local options = {
     colorcolumn = '+1',
 
     winborder = 'rounded',
+
+    showmode = false,
 }
 
 for k, v in pairs(options) do
