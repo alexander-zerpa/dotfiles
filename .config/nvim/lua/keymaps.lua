@@ -73,4 +73,8 @@ keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k', { desc = "move focus up" })
 keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l', { desc = "move focus right" })
 keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>',  { desc = "window movement options" })
 
+-- backspace replace fix
 keymap.set('s', '<BS>', '<C-O>s',  { desc = "fix backspace on replace" })
+
+-- fix <C-i> <TAB> conflict
+keymap.set('n', '<C-i>', '<C-i>', { noremap = true})
