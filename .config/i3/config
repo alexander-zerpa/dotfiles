@@ -1,0 +1,28 @@
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+
+set $term i3-sensible-terminal
+set $menu rofi -show drun -show-icons
+set $runner rofi -show run
+set $lock i3lock-fancy-rapid 5 5
+
+set $status_command i3status-rs
+
+tiling_drag modifier titlebar
+
+mouse_warping output
+
+set $gaps 10
+
+gaps inner $gaps
+smart_borders on
+
+include ./keybinds.conf
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym mod4+Control+r restart
+
+include ./monokai-tasty-theme.conf
+

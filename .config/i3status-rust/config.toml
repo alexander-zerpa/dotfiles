@@ -1,0 +1,107 @@
+icons_format = "{icon}"
+
+[theme]
+theme = "semi-native"
+[theme.overrides]
+idle_fg = "#ffffff"
+info_fg = "#62d8f1"
+good_fg = "#a4e400"
+warning_fg = "#ff9700"
+critical_fg = "#fc1a70"
+
+[icons]
+icons = "material-nf"
+
+[[block]]
+block = "scratchpad"
+format = "{ $icon$count.eng(range:1..) |}"
+
+[[block]]
+block = "net"
+format = " $icon $signal_strength ($ssid) "
+format_alt = " $icon$frequency ^icon_net_down $graph_down ^icon_net_up $graph_up "
+inactive_format = " $icon "
+[[block.click]]
+button = "right"
+cmd = "rofi-network-manager"
+
+[[block]]
+block = "sound"
+format = " $icon {$volume.eng(w:2) |}"
+format_alt = " $icon {$volume.eng(w:2) |} ($output_description)"
+device_kind = "sink"
+[[block.click]]
+button = "middle"
+action = "toggle_mute"
+[[block.click]]
+button = "right"
+cmd = "rofi-pulse-select sink"
+
+[[block]]
+block = "sound"
+format = " $icon {$volume.eng(w:2) |}"
+format_alt = " $icon {$volume.eng(w:2) |} ($output_description)"
+device_kind = "source"
+[[block.click]]
+button = "middle"
+action = "toggle_mute"
+[[block.click]]
+button = "right"
+cmd = "rofi-pulse-select source"
+
+[[block]]
+block = "backlight"
+format = " $icon {$brightness.eng(w:2) |}"
+cycle = [5, 50, 100]
+
+[[block]]
+block = "time"
+format = " $icon $timestamp.datetime(f:'%H:%M:%S') "
+interval = 1
+[[block]]
+block = "time"
+format = " 󰃮 $timestamp.datetime(f:'%A, %d %B %Y') "
+interval = 1
+
+[[block]]
+block = "custom"
+format = " $icon "
+interval = 1
+command = """
+if ! bluetoothctl show | grep -q "Powered: yes"; then
+    echo '{"icon": "bluetooth_off", "state": "Warning", "text": "off"}'
+elif bluetoothctl info | grep -q "Connected: yes"; then
+    echo '{"icon": "bluetooth_connected", "state": "Good", "text": "connected"}'
+else
+    echo '{"icon": "bluetooth_disconnected", "state": "Idle", "text": "disconnected"}'
+fi
+"""# bluetoothctl show | grep -q 'Powered: yes' && echo 󰂳 || echo 󰂲"
+json = true
+[block.icons_overrides]
+bluetooth_off = "󰂲"
+bluetooth_connected = "󰂱"
+bluetooth_disconnected = "󰂯"
+[[block.click]]
+button = "right"
+cmd = "rofi-bluetooth"
+
+[[block]]
+block = "notify"
+error_format = ""
+[[block.click]]
+button = "left"
+action = "show"
+[[block.click]]
+button = "right"
+action = "toggle_paused"
+
+[[block]]
+block = "battery"
+format = " $icon $percentage "
+full_format = " 󱟢 $percentage "
+charging_format = " $icon $percentage "
+empty_format = " 󱟩 $percentage "
+not_charging_format = " 󱟦 $percentage "
+missing_format = " $icon $percentage "
+full_threshold = 99
+good = 100
